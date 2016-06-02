@@ -275,7 +275,7 @@ W> A neat exercise is to write a script to output the data in the database so th
 To implement the category pages so that they can be accessed via `/rango/category/<category-name-slug>/` we need to make a number of changes and undertake the following steps:
 
 1. Import the `Page` model into `rango/views.py`.
-2. Create a new view in `rango/views.py` called `show_category()`. The `show_category()` view will take an additional parameter, `category_name_url` which will stored the encoded category name.
+2. Create a new view in `rango/views.py` called `show_category()`. The `show_category()` view will take an additional parameter, `category_name_url` which will store the encoded category name.
 	-   We will need helper functions to encode and decode the `category_name_url`.
 3.  Create a new template, `templates/rango/category.html`.
 4.  Update Rango's `urlpatterns` to map the new `category` view to a URL pattern in `rango/urls.py`.
