@@ -279,8 +279,8 @@ If you need more secure cookies, then use session based cookies.
 
 1.  Firstly, ensure that the `MIDDLEWARE_CLASSES` list in your Django project's `settings.py` module contains `django.contrib.sessions.middleware.SessionMiddleware`. If it doesn't, add it to the list.
 2.  Configure your session backend `SESSION_ENGINE`. See the [official Django Documentation on Sessions](https://docs.djangoproject.com/en/1.9/topics/http/sessions/) for the various backend configurations.
-3.  Check to see if the cookie exists via `requests.sessions.get()`.
-4.  Update or set the cookie via the session dictionary, `requests.session['<cookie_name>']`.
+3.  Check to see if the cookie exists via `request.session.get()`.
+4.  Update or set the cookie via the session dictionary, `request.session['<cookie_name>']`.
 
 X> ### Exercises
 X>
