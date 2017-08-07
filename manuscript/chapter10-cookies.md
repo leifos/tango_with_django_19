@@ -190,19 +190,10 @@ To use the server side data, we need to refactor the code we have written so far
 Since all the cookies are stored server side, we won't be changing the response directly. Because of this, we can remove `response` from the `visitor_cookie_handler()` function definition.
 
 {lang="python",linenos=off}
-	# A helper method
-	def get_server_side_cookie(request, cookie, default_val=None):
-	    val = request.session.get(cookie)
-	    if not val:
-	        val = default_val
-	    return val
-	
 	# Updated the function definition
 	def visitor_cookie_handler(request):
-	    visits = int(get_server_side_cookie(request, 'visits', '1'))
-	    last_visit_cookie = get_server_side_cookie(request,
-	                                               'last_visit',
-	                                               str(datetime.now()))
+	    visits = int(request.session.get('visits', '1'))
+	    last_visit_cookie = request.session.get('last_visit', str(datetime.now()))
 	    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
 	                                        '%Y-%m-%d %H:%M:%S')
 	
