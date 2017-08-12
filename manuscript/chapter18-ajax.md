@@ -36,7 +36,7 @@ To let users "like" certain categories, undertake the following workflow.
 
 - In the `category.html` template:
 	- Add in a "Like" button with `id="like"`.
-	- Add in a template tag to display the number of likes: `{{% category.likes %}}`
+	- Add in a template tag to display the number of likes: `{{ category.likes }}`
 	- Place this inside a div with `id="like_count"`, i.e. `<div id="like_count">{{ category.likes }} </div>`
 	- This sets up the template to capture likes and to display likes for the category.
 	- Note, since the `category()` view passes a reference to the category object, we can use that to access the number of likes, with `{{ category.likes }}` in the template
