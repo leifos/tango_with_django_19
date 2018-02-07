@@ -37,7 +37,7 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = str(datetime.now())
     else:
         visits = 1
-        # set the last visit cookie 
+        # set the last visit cookie
         request.session['last_visit'] = last_visit_cookie
     # update/set the visits cookie
     request.session['visits'] = visits
@@ -47,25 +47,25 @@ def visitor_cookie_handler(request):
 
 def index(request):
     #context_dict = {'boldmessage': "Crunchie, creamy, cookie, candy, cupcake!"}
-    
+
     request.session.set_test_cookie()
-    
+
     category_list = Category.objects.order_by('-likes')[:5]
-    
+
     page_list = Page.objects.order_by('-views')[:5]
-    
+
     context_dict = {'categories': category_list, 'pages': page_list}
-    
+
     visitor_cookie_handler(request)
-    
+
     context_dict['visits'] = request.session['visits']
-    
+
     print(request.session['visits'])
-    
+
     response = render(request, 'rango/index.html', context=context_dict)
-    
+
     return response
-    
+
 
 def about(request):
     if request.session.test_cookie_worked():
@@ -73,15 +73,15 @@ def about(request):
         request.session.delete_test_cookie()
     # To complete the exercise in chapter 4, we need to remove the following line
     # return HttpResponse("Rango says here is the about page. <a href='/rango/'>View index page</a>")
-    
+
     # and replace it with a pointer to ther about.html template using the render method
     return render(request, 'rango/about.html',{})
-    
+
 def show_category(request, category_name_slug):
     # Create a context dictionary which we can pass
     # to the template rendering engine.
     context_dict = {}
-    
+
     try:
         # Can we find a category name slug with the given name?
         # If we can't, the .get() method raises a DoesNotExist exception.
@@ -90,7 +90,7 @@ def show_category(request, category_name_slug):
         # Retrieve all of the associated pages.
         # Note that filter() returns a list of page objects or an empty list
         pages = Page.objects.filter(category=category)
-        
+
         # Adds our results list to the template context under name pages.
         context_dict['pages'] = pages
         # We also add the category object from
@@ -100,7 +100,7 @@ def show_category(request, category_name_slug):
 
         # We get here if we didn't find the specified category.
         # Don't do anything -
-        # the template will display the "no category" message for us.        
+        # the template will display the "no category" message for us.
     except Category.DoesNotExist:
         context_dict['category'] = None
         context_dict['pages'] = None
@@ -112,8 +112,9 @@ def show_category(request, category_name_slug):
 
     result_list = []
     if request.method == 'POST':
-        query = request.POST['query'].strip()
+        query = request.POST.get('query')
         if query:
+            query = query.strip()
             # Run our Webhose function to get the results list!
             result_list = run_query(query)
             context_dict['query'] = query
@@ -122,10 +123,10 @@ def show_category(request, category_name_slug):
 
     # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
-    
-    
-    
-    
+
+
+
+
 def add_category(request):
     form = CategoryForm()
     # A HTTP POST?
@@ -147,8 +148,8 @@ def add_category(request):
     # Will handle the bad form (or form details), new form or no form supplied cases.
     # Render the form with error messages (if any).
     return render(request, 'rango/add_category.html', {'form': form})
-    
-    
+
+
 def add_page(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -172,8 +173,8 @@ def add_page(request, category_name_slug):
     context_dict = {'form':form, 'category': category}
 
     return render(request, 'rango/add_page.html', context_dict)
-    
-    
+
+
 def search(request):
     result_list = []
     if request.method == 'POST':
@@ -182,8 +183,8 @@ def search(request):
              # Run our Webhose function to get the results list!
              result_list = run_query(query)
     return render(request, 'rango/search.html', {'result_list': result_list})
-    
-    
+
+
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -210,7 +211,7 @@ def register(request):
   #  	else:
 		# user_form = UserForm()
   #      	profile_form = UserProfileForm()
-    	
+
         user_form = UserForm()
         profile_form = UserProfileForm()
 
@@ -231,6 +232,7 @@ def track_url(request):
             page = Page.objects.get(id=page_id)
             page.views = page.views + 1
             page.save()
+            print(page.url)
             return redirect(page.url)
         except:
             return HttpResponse("Page id {0} not found".format(page_id))
@@ -246,13 +248,13 @@ def register_profile(request):
             user_profile = form.save(commit=False)
             user_profile.user = request.user
             user_profile.save()
-            
+
             return redirect('index')
         else:
             print(form.errors)
 
     context_dict = {'form':form}
-    
+
     return render(request, 'rango/profile_registration.html', context_dict)
 
 class RangoRegistrationView(RegistrationView):
@@ -265,10 +267,10 @@ def profile(request, username):
         user = User.objects.get(username=username)
     except User.DoesNotExist:
         return redirect('index')
-    
+
     userprofile = UserProfile.objects.get_or_create(user=user)[0]
     form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
-    
+
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
         if form.is_valid():
@@ -276,7 +278,7 @@ def profile(request, username):
             return redirect('profile', user.username)
         else:
             print(form.errors)
-    
+
     return render(request, 'rango/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
 
 @login_required
