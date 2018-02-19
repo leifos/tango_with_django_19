@@ -76,7 +76,7 @@ With the view updated, we can complete the fourth step and update the template `
 	    
 	    <div>
 	        <a href="/rango/about/">About Rango</a><br />
-	        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+	        <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" /> 
 	    </div>
 	</body>
 	</html>
