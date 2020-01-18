@@ -31,13 +31,10 @@ In this book, we will be taking an exampled-based approach. The book will show y
 
 At the end of each chapter, we have included a number of exercises designed to push you harder and to see if you can apply what you have learned. The later chapters of the book provide a number of open development exercises along with coded solutions and explanations.
 
-X> ### Exercises will be clearly delineated like this!
-X> In each chapter we have added a number of exercises to test your knowledge and skill.
-X>
-X> *You will need to complete these exercises as the subsequent chapters are dependent on them.*
-X>
-X> Don't worry if you get stuck, though, as you can always check out our solutions to all the exercises on our [*GitHub* repository](https://github.com/leifos/tango_with_django_19).
-
+### Exercises will be clearly delineated like this!
+In each chapter we have added a number of exercises to test your knowledge and skill.
+* *You will need to complete these exercises as the subsequent chapters are dependent on them.*
+* Don't worry if you get stuck, though, as you can always check out our solutions to all the exercises on our [*GitHub* repository](https://github.com/leifos/tango_with_django_19).
 
 {pagebreak}
 
@@ -80,7 +77,7 @@ Your client would like you to create a website called *Rango* that lets users br
 
 At first glance, the specified application to develop seems reasonably straightforward. In essence, it is just a list of categories that link to pages. However, there are a number of complexities and challenges that need to be addressed. First, let's try and build up a better picture of what needs to be developed by laying down some high-level designs.
 
-X> ### Exercises
+### Exercises
 X> Before going any further, think about these specifications and draw up the following design artefacts.
 X>
 X> * An **N-Tier or System Architecture** diagram.
